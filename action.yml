@@ -1,13 +1,10 @@
 name: 'ph-migration-custom-action'
 description: 'POC PH Custom Action'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  type: 
+    description: 'Type of version upgrade'
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+    default: 'patch'
 runs:
   using: 'node12'
   main: 'dist/index.js'

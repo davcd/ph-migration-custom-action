@@ -1,15 +1,14 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
+const core = require('@actions/core')
+
+const semver = require('semver')
+const fs = require('fs')
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
+  const current_version = fs.readFileSync('./gradle.properties', {encoding:'utf8', flag:'r'})
+  const type = core.getInput('type')
+  let new_version = semver.inc(current_version, type)
+  fs.writeFileSync('./gradle.properties', new_version, {encoding:'utf8', flag:'w'})
+
 } catch (error) {
   core.setFailed(error.message);
 }
