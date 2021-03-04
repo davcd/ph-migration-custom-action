@@ -8,6 +8,9 @@ try {
   const type = core.getInput('type')
   let new_version = semver.inc(current_version, type)
   fs.writeFileSync('./gradle.properties', new_version, {encoding:'utf8', flag:'w'})
+  
+  console.log("current_version"+current_version)
+  console.log("new_version"+new_version)
 
 } catch (error) {
   core.setFailed(error.message);
