@@ -11,11 +11,13 @@ const semver = __nccwpck_require__(2205)
 const fs = __nccwpck_require__(5747)
 
 try {
-  const current_version = fs.readFileSync('./gradle.properties', {encoding:'utf8', flag:'r'})
+  const gradle_properties_content = fs.readFileSync('./gradle.properties', {encoding:'utf8', flag:'r'})
+  const old_version = semver.clean(gradle_properties_content)
   const type = core.getInput('type')
-  let new_version = semver.inc(current_version, type)
+  let new_version = semver.inc(old_version, type)
   fs.writeFileSync('./gradle.properties', new_version, {encoding:'utf8', flag:'w'})
-
+  core.setOutput('old_version', old_version)
+  core.setOutput('new_version', new_version)
 } catch (error) {
   core.setFailed(error.message);
 }
