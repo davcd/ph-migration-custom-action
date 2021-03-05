@@ -5,6 +5,11 @@ inputs:
     description: 'Type of version upgrade'
     required: true
     default: 'patch'
+inputs:
+  old_version: 
+    description: 'Previous version'
+  new_version: 
+    description: 'New version'
 runs:
   using: 'node12'
   main: 'dist/index.js'
